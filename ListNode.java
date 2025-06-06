@@ -16,22 +16,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Input number of elements
-        System.out.print("Enter number of elements: ");
-        int n = sc.nextInt();
-
-        // Edge case: empty list
-        if (n == 0) {
+        System.out.println("Enter sorted elements (comma or space separated):");
+        String line = sc.nextLine().trim();
+        if (line.isEmpty()) {
             System.out.println("[]");
             return;
         }
 
-        // Input sorted linked list elements
-        System.out.println("Enter " + n + " sorted elements:");
-        ListNode head = new ListNode(sc.nextInt());
+        // Split on commas and/or whitespace
+        String[] parts = line.split("[,\\s]+");
+
+        // Build linked list from input
+        ListNode head = new ListNode(Integer.parseInt(parts[0]));
         ListNode current = head;
-        for (int i = 1; i < n; i++) {
-            current.next = new ListNode(sc.nextInt());
+        for (int i = 1; i < parts.length; i++) {
+            current.next = new ListNode(Integer.parseInt(parts[i]));
             current = current.next;
         }
 
@@ -39,7 +38,7 @@ public class Main {
         Main obj = new Main();
         TreeNode root = obj.sortedListToBST(head);
 
-        // Output BST in level-order format
+        // Print BST as level-order list
         System.out.println(obj.levelOrderToList(root));
     }
 
@@ -63,7 +62,7 @@ public class Main {
         return root;
     }
 
-    // Print BST as a LeetCode-style level-order array
+    // Print BST as LeetCode style level-order array (with nulls)
     public List<Object> levelOrderToList(TreeNode root) {
         List<Object> result = new ArrayList<>();
         if (root == null) return result;
